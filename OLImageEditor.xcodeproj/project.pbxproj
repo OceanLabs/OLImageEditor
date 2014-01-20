@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		720C2E6BE7F54C6987B0B30E /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 45C7FF44D6FE4E79B8C5C38F /* libPods.a */; };
 		CD550E22188C6D2F00782D75 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD550E21188C6D2F00782D75 /* Foundation.framework */; };
 		CD550E24188C6D2F00782D75 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD550E23188C6D2F00782D75 /* CoreGraphics.framework */; };
 		CD550E26188C6D2F00782D75 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD550E25188C6D2F00782D75 /* UIKit.framework */; };
@@ -21,6 +22,12 @@
 		CD550E43188C6D2F00782D75 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD550E25188C6D2F00782D75 /* UIKit.framework */; };
 		CD550E4B188C6D2F00782D75 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = CD550E49188C6D2F00782D75 /* InfoPlist.strings */; };
 		CD550E4D188C6D2F00782D75 /* OLImageEditorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CD550E4C188C6D2F00782D75 /* OLImageEditorTests.m */; };
+		CD550E5B188C73B400782D75 /* c1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CD550E5A188C73B400782D75 /* c1.jpg */; };
+		CDBE6AE4188C7C08009571A2 /* OLImageEditor.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CDBE6AE3188C7C08009571A2 /* OLImageEditor.xcassets */; };
+		CDBE6AEA188C7EF7009571A2 /* OLImageEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CDBE6AE9188C7EF7009571A2 /* OLImageEditorViewController.m */; };
+		CDBE6AED188C80AC009571A2 /* OLCropViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CDBE6AEC188C80AC009571A2 /* OLCropViewController.m */; };
+		CDBE6AF0188C984E009571A2 /* OLImageEditorImage.m in Sources */ = {isa = PBXBuildFile; fileRef = CDBE6AEF188C984E009571A2 /* OLImageEditorImage.m */; };
+		CDBE6AF2188C9BBE009571A2 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDBE6AF1188C9BBE009571A2 /* AssetsLibrary.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +41,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		42C1905F8B664EB59B006C3B /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		45C7FF44D6FE4E79B8C5C38F /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD550E1E188C6D2F00782D75 /* OLImageEditor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OLImageEditor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD550E21188C6D2F00782D75 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		CD550E23188C6D2F00782D75 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -53,6 +62,15 @@
 		CD550E48188C6D2F00782D75 /* OLImageEditorTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "OLImageEditorTests-Info.plist"; sourceTree = "<group>"; };
 		CD550E4A188C6D2F00782D75 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CD550E4C188C6D2F00782D75 /* OLImageEditorTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OLImageEditorTests.m; sourceTree = "<group>"; };
+		CD550E5A188C73B400782D75 /* c1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = c1.jpg; sourceTree = "<group>"; };
+		CDBE6AE3188C7C08009571A2 /* OLImageEditor.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = OLImageEditor.xcassets; sourceTree = "<group>"; };
+		CDBE6AE8188C7EF7009571A2 /* OLImageEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OLImageEditorViewController.h; sourceTree = "<group>"; };
+		CDBE6AE9188C7EF7009571A2 /* OLImageEditorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OLImageEditorViewController.m; sourceTree = "<group>"; };
+		CDBE6AEB188C80AC009571A2 /* OLCropViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OLCropViewController.h; sourceTree = "<group>"; };
+		CDBE6AEC188C80AC009571A2 /* OLCropViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OLCropViewController.m; sourceTree = "<group>"; };
+		CDBE6AEE188C984E009571A2 /* OLImageEditorImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OLImageEditorImage.h; sourceTree = "<group>"; };
+		CDBE6AEF188C984E009571A2 /* OLImageEditorImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OLImageEditorImage.m; sourceTree = "<group>"; };
+		CDBE6AF1188C9BBE009571A2 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,9 +78,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CDBE6AF2188C9BBE009571A2 /* AssetsLibrary.framework in Frameworks */,
 				CD550E24188C6D2F00782D75 /* CoreGraphics.framework in Frameworks */,
 				CD550E26188C6D2F00782D75 /* UIKit.framework in Frameworks */,
 				CD550E22188C6D2F00782D75 /* Foundation.framework in Frameworks */,
+				720C2E6BE7F54C6987B0B30E /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -86,6 +106,7 @@
 				CD550E46188C6D2F00782D75 /* OLImageEditorTests */,
 				CD550E20188C6D2F00782D75 /* Frameworks */,
 				CD550E1F188C6D2F00782D75 /* Products */,
+				42C1905F8B664EB59B006C3B /* Pods.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -101,10 +122,12 @@
 		CD550E20188C6D2F00782D75 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CDBE6AF1188C9BBE009571A2 /* AssetsLibrary.framework */,
 				CD550E21188C6D2F00782D75 /* Foundation.framework */,
 				CD550E23188C6D2F00782D75 /* CoreGraphics.framework */,
 				CD550E25188C6D2F00782D75 /* UIKit.framework */,
 				CD550E40188C6D2F00782D75 /* XCTest.framework */,
+				45C7FF44D6FE4E79B8C5C38F /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -112,12 +135,8 @@
 		CD550E27188C6D2F00782D75 /* OLImageEditor */ = {
 			isa = PBXGroup;
 			children = (
-				CD550E30188C6D2F00782D75 /* AppDelegate.h */,
-				CD550E31188C6D2F00782D75 /* AppDelegate.m */,
-				CD550E33188C6D2F00782D75 /* Main.storyboard */,
-				CD550E36188C6D2F00782D75 /* ViewController.h */,
-				CD550E37188C6D2F00782D75 /* ViewController.m */,
-				CD550E39188C6D2F00782D75 /* Images.xcassets */,
+				CD550E57188C6D3E00782D75 /* ImageEditor */,
+				CD550E56188C6D3400782D75 /* Example */,
 				CD550E28188C6D2F00782D75 /* Supporting Files */,
 			);
 			path = OLImageEditor;
@@ -152,6 +171,34 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		CD550E56188C6D3400782D75 /* Example */ = {
+			isa = PBXGroup;
+			children = (
+				CD550E5A188C73B400782D75 /* c1.jpg */,
+				CD550E30188C6D2F00782D75 /* AppDelegate.h */,
+				CD550E31188C6D2F00782D75 /* AppDelegate.m */,
+				CD550E33188C6D2F00782D75 /* Main.storyboard */,
+				CD550E36188C6D2F00782D75 /* ViewController.h */,
+				CD550E37188C6D2F00782D75 /* ViewController.m */,
+				CD550E39188C6D2F00782D75 /* Images.xcassets */,
+			);
+			name = Example;
+			sourceTree = "<group>";
+		};
+		CD550E57188C6D3E00782D75 /* ImageEditor */ = {
+			isa = PBXGroup;
+			children = (
+				CDBE6AE3188C7C08009571A2 /* OLImageEditor.xcassets */,
+				CDBE6AE8188C7EF7009571A2 /* OLImageEditorViewController.h */,
+				CDBE6AE9188C7EF7009571A2 /* OLImageEditorViewController.m */,
+				CDBE6AEB188C80AC009571A2 /* OLCropViewController.h */,
+				CDBE6AEC188C80AC009571A2 /* OLCropViewController.m */,
+				CDBE6AEE188C984E009571A2 /* OLImageEditorImage.h */,
+				CDBE6AEF188C984E009571A2 /* OLImageEditorImage.m */,
+			);
+			name = ImageEditor;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -159,9 +206,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CD550E50188C6D2F00782D75 /* Build configuration list for PBXNativeTarget "OLImageEditor" */;
 			buildPhases = (
+				B6D8E39AF30546C1803F4666 /* Check Pods Manifest.lock */,
 				CD550E1A188C6D2F00782D75 /* Sources */,
 				CD550E1B188C6D2F00782D75 /* Frameworks */,
 				CD550E1C188C6D2F00782D75 /* Resources */,
+				767BF477DF054BDF9D7304AF /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -229,6 +278,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				CD550E3A188C6D2F00782D75 /* Images.xcassets in Resources */,
+				CDBE6AE4188C7C08009571A2 /* OLImageEditor.xcassets in Resources */,
+				CD550E5B188C73B400782D75 /* c1.jpg in Resources */,
 				CD550E2C188C6D2F00782D75 /* InfoPlist.strings in Resources */,
 				CD550E35188C6D2F00782D75 /* Main.storyboard in Resources */,
 			);
@@ -244,6 +295,39 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		767BF477DF054BDF9D7304AF /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B6D8E39AF30546C1803F4666 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		CD550E1A188C6D2F00782D75 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -251,7 +335,10 @@
 			files = (
 				CD550E38188C6D2F00782D75 /* ViewController.m in Sources */,
 				CD550E32188C6D2F00782D75 /* AppDelegate.m in Sources */,
+				CDBE6AED188C80AC009571A2 /* OLCropViewController.m in Sources */,
 				CD550E2E188C6D2F00782D75 /* main.m in Sources */,
+				CDBE6AEA188C7EF7009571A2 /* OLImageEditorViewController.m in Sources */,
+				CDBE6AF0188C984E009571A2 /* OLImageEditorImage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -375,6 +462,7 @@
 		};
 		CD550E51188C6D2F00782D75 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 42C1905F8B664EB59B006C3B /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -388,6 +476,7 @@
 		};
 		CD550E52188C6D2F00782D75 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 42C1905F8B664EB59B006C3B /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -460,6 +549,7 @@
 				CD550E52188C6D2F00782D75 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		CD550E53188C6D2F00782D75 /* Build configuration list for PBXNativeTarget "OLImageEditorTests" */ = {
 			isa = XCConfigurationList;
@@ -468,6 +558,7 @@
 				CD550E55188C6D2F00782D75 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
