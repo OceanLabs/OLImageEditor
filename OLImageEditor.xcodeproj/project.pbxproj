@@ -27,7 +27,6 @@
 		CDBE6AEA188C7EF7009571A2 /* OLImageEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CDBE6AE9188C7EF7009571A2 /* OLImageEditorViewController.m */; };
 		CDBE6AED188C80AC009571A2 /* OLCropViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CDBE6AEC188C80AC009571A2 /* OLCropViewController.m */; };
 		CDBE6AF0188C984E009571A2 /* OLImageEditorImage.m in Sources */ = {isa = PBXBuildFile; fileRef = CDBE6AEF188C984E009571A2 /* OLImageEditorImage.m */; };
-		CDBE6AF2188C9BBE009571A2 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDBE6AF1188C9BBE009571A2 /* AssetsLibrary.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,7 +69,6 @@
 		CDBE6AEC188C80AC009571A2 /* OLCropViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OLCropViewController.m; sourceTree = "<group>"; };
 		CDBE6AEE188C984E009571A2 /* OLImageEditorImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OLImageEditorImage.h; sourceTree = "<group>"; };
 		CDBE6AEF188C984E009571A2 /* OLImageEditorImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OLImageEditorImage.m; sourceTree = "<group>"; };
-		CDBE6AF1188C9BBE009571A2 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,7 +76,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CDBE6AF2188C9BBE009571A2 /* AssetsLibrary.framework in Frameworks */,
 				CD550E24188C6D2F00782D75 /* CoreGraphics.framework in Frameworks */,
 				CD550E26188C6D2F00782D75 /* UIKit.framework in Frameworks */,
 				CD550E22188C6D2F00782D75 /* Foundation.framework in Frameworks */,
@@ -122,7 +119,6 @@
 		CD550E20188C6D2F00782D75 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				CDBE6AF1188C9BBE009571A2 /* AssetsLibrary.framework */,
 				CD550E21188C6D2F00782D75 /* Foundation.framework */,
 				CD550E23188C6D2F00782D75 /* CoreGraphics.framework */,
 				CD550E25188C6D2F00782D75 /* UIKit.framework */,

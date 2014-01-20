@@ -53,10 +53,14 @@
     [contentView addSubview:self.progressView];
     
     [self.image getImageWithProgress:^(float progress) {
-        self.progressView.progress = progress;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.progressView.progress = progress;
+        });
     } completion:^(UIImage *image) {
-        self.progressView.hidden = YES;
-        self.cropView.image = image;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.progressView.hidden = YES;
+            self.cropView.image = image;
+        });
     }];
 }
 
