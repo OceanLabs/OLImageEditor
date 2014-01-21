@@ -9,12 +9,13 @@
 #import "OLCropViewController.h"
 #import "OLImageEditorViewController.h"
 #import "OLImageEditorImage.h"
+#import "OLImageCropView.h"
 #import <DACircularProgress/DACircularProgressView.h>
-#import <PECropView.h>
 
-@interface OLCropViewController ()
-@property (nonatomic, strong) PECropView *cropView;
+@interface OLCropViewController () <OLImageCropViewDelegate>
+@property (nonatomic, strong) OLImageCropView *cropView;
 @property (nonatomic, strong) DACircularProgressView *progressView;
+@property (nonatomic, strong) UIBarButtonItem *applyButton;
 @end
 
 @implementation OLCropViewController
@@ -25,15 +26,17 @@
     contentView.backgroundColor = [UIColor blackColor];
     self.view = contentView;
     
-    self.cropView = [[PECropView alloc] initWithFrame:self.view.bounds];
+    self.cropView = [[OLImageCropView alloc] initWithFrame:self.view.bounds];
+    self.cropView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [contentView addSubview:self.cropView];
+    self.cropView.delegate = self;
 
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(onButtonCancelClicked)];
 
-    UIBarButtonItem *applyButton = [[UIBarButtonItem alloc] initWithTitle:@"Apply" style:UIBarButtonItemStylePlain target:self action:@selector(onButtonApplyClicked)];
-    self.navigationItem.rightBarButtonItem = applyButton;
-    applyButton.tintColor = [UIColor colorWithRed:255 / 255.0f green:204 / 255.0f blue:0 alpha:1];
-    applyButton.enabled = NO;
+    self.applyButton = [[UIBarButtonItem alloc] initWithTitle:@"Apply" style:UIBarButtonItemStylePlain target:self action:@selector(onButtonApplyClicked)];
+    self.navigationItem.rightBarButtonItem = self.applyButton;
+    self.applyButton.tintColor = [UIColor colorWithRed:255 / 255.0f green:204 / 255.0f blue:0 alpha:1];
+    self.applyButton.enabled = NO;
     
     UIBarButtonItem *flexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     UIBarButtonItem *deleteButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"trashcan"] style:UIBarButtonItemStylePlain target:self action:@selector(onButtonDeleteClicked)];
@@ -60,14 +63,15 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             self.progressView.hidden = YES;
             self.cropView.image = image;
+            self.cropView.cropTransform = self.image.transform;
+//            self.cropView.cropAspectRatio = 1;
+//            self.cropView.keepingCropAspectRatio = YES;
         });
     }];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-//    self.cropView.cropAspectRatio = 1;
-//    self.cropView.keepingCropAspectRatio = YES;
 }
 
 - (void)onButtonDeleteClicked {
@@ -87,7 +91,19 @@
 }
 
 - (void)onButtonApplyClicked {
-    
+    self.image.transform = self.cropView.cropTransform;
+    OLImageEditorViewController *parent = (OLImageEditorViewController *) self.parentViewController;
+    if ([parent.delegate respondsToSelector:@selector(imageEditor:userDidSuccessfullyCropImage:)]) {
+        [parent.delegate imageEditor:parent userDidSuccessfullyCropImage:self.image];
+    } else {
+        [parent dismissViewControllerAnimated:YES completion:nil];
+    }
+}
+
+#pragma mark - OLImageCropViewDelegate methods
+
+- (void)imageCropViewUserStartedCroppingImage:(OLImageCropView *)imageCropView {
+    self.applyButton.enabled = YES;
 }
 
 @end

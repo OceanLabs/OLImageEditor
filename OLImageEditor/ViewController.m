@@ -10,8 +10,10 @@
 #import "OLImageEditorViewController.h"
 #import "OLImageEditorImage.h"
 
+
 @interface ViewController () <OLImageEditorViewControllerDelegate, UINavigationControllerDelegate>
 @property (nonatomic, strong) OLImageEditorImage *image;
+@property (nonatomic, strong) IBOutlet UIImageView *imageView;
 @end
 
 @implementation ViewController
@@ -24,6 +26,7 @@
     OLImageEditorViewController *editor = [[OLImageEditorViewController alloc] init];
     editor.delegate = self;
     editor.image = self.image;
+    NSLog(@"%f,%f", self.image.transform.tx, self.image.transform.ty);
     [self presentViewController:editor animated:YES completion:NULL];
 }
 
@@ -38,7 +41,10 @@
 }
 
 - (void)imageEditor:(OLImageEditorViewController *)editor userDidSuccessfullyCropImage:(id<OLImageEditorImage>)image {
-    
+    [self dismissViewControllerAnimated:YES completion:nil];
+    [OLImageEditorImage getCoppedImageFromEditorImage:image size:CGSizeMake(256, 256) progress:nil completion:^(UIImage *image) {
+        self.imageView.image = image;
+    }];
 }
 
 @end

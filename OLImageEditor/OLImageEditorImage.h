@@ -14,6 +14,7 @@ typedef void (^OLImageEditorImageGetImageProgressHandler)(float progress);
 
 @protocol OLImageEditorImage <NSObject>
 @required
+@property (nonatomic, assign) CGAffineTransform transform;
 @property (nonatomic, assign) CGRect cropRect;
 - (void)getImageWithProgress:(OLImageEditorImageGetImageProgressHandler)progressHandler completion:(OLImageEditorImageGetImageCompletionHandler)completionHandler;
 @optional
@@ -25,5 +26,7 @@ typedef void (^OLImageEditorImageGetImageProgressHandler)(float progress);
 
 + (OLImageEditorImage *)imageWithImage:(UIImage *)image;
 + (OLImageEditorImage *)imageWithURL:(NSURL *)url;
+
++ (void)getCoppedImageFromEditorImage:(id<OLImageEditorImage>)image size:(CGSize)size progress:(OLImageEditorImageGetImageProgressHandler)progressHandler completion:(OLImageEditorImageGetImageCompletionHandler)completionHandler;
 
 @end
