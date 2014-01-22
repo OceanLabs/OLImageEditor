@@ -76,8 +76,8 @@
 
 - (void)onButtonDeleteClicked {
     OLImageEditorViewController *parent = (OLImageEditorViewController *) self.parentViewController;
-    if ([parent.delegate respondsToSelector:@selector(imageEditorUserDidDelete:)]) {
-        [parent.delegate imageEditorUserDidDelete:parent];
+    if ([parent.delegate respondsToSelector:@selector(imageEditor:userDidDeleteImage:)]) {
+        [parent.delegate imageEditor:parent userDidDeleteImage:self.image];
     }
 }
 

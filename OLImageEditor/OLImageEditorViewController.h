@@ -14,7 +14,7 @@
 @protocol OLImageEditorViewControllerDelegate <NSObject>
 @optional
 - (void)imageEditorUserDidCancel:(OLImageEditorViewController *)imageEditorVC;
-- (void)imageEditorUserDidDelete:(OLImageEditorViewController *)imageEditorVC;
+- (void)imageEditor:(OLImageEditorViewController *)imageEditorVC userDidDeleteImage:(id<OLImageEditorImage>)image;
 - (void)imageEditor:(OLImageEditorViewController *)editor userDidSuccessfullyCropImage:(id<OLImageEditorImage>)image;
 @required
 @end
