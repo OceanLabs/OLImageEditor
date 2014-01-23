@@ -48,7 +48,7 @@
     [editorImage getImageWithProgress:progressHandler completion:^(UIImage *image) {
         // Create a graphics context the size of the bounding rectangle
         UIImage *cropboxGuideImage = [UIImage imageNamed:@"cropbox_guide"];
-        CGSize cropboxGuideSize = CGSizeMake(cropboxGuideImage.size.width - 10, cropboxGuideImage.size.height - 10);
+        CGSize cropboxGuideSize = CGSizeMake(cropboxGuideImage.scale * (cropboxGuideImage.size.width - 10), cropboxGuideImage.scale * (cropboxGuideImage.size.height - 10));
         NSAssert(cropboxGuideSize.width == cropboxGuideSize.height, @"oops only support 1:1 aspect ratio at the moment given we show be showing a square crop box");
         NSAssert(destSize.width == destSize.height, @"oops only support 1:1 aspect ratio at the moment given we show be showing a square crop box");
         
@@ -56,18 +56,20 @@
         CGFloat imgHeight = image.size.height * image.scale;
         
         // scale image to aspect fill initial crop box
-        CGFloat scale = 1;
+        CGFloat cropboxScale = 1;
         if (imgWidth < imgHeight) {
-            scale = cropboxGuideSize.width / imgWidth;
+            cropboxScale = cropboxGuideSize.width / imgWidth;
         } else {
-            scale = cropboxGuideSize.height / imgHeight;
+            cropboxScale = cropboxGuideSize.height / imgHeight;
         }
         
+        NSLog(@"imageSize: %fx%f, imageScale:%f coord scale: %f", imgWidth, imgHeight, image.scale, cropboxScale);
         // scale cropped image from cropbox size to dest size
-        scale *= destSize.width / cropboxGuideSize.width;
-
+        CGFloat destScale = destSize.width / cropboxGuideSize.width;
+        CGFloat scale = cropboxScale * destScale;
+        
         // do the transforms and draw the image
-        UIGraphicsBeginImageContext(destSize);
+        UIGraphicsBeginImageContextWithOptions(destSize, /*opaque: */ YES, /*scale: */ 1);
         CGContextRef context = UIGraphicsGetCurrentContext();
         CGContextConcatCTM(context, CGAffineTransformMakeTranslation(destSize.width / 2, destSize.height / 2));
         CGContextConcatCTM(context, CGAffineTransformMakeScale(scale, scale));
@@ -77,6 +79,30 @@
         UIImage *imageCopy = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
         completionHandler(imageCopy);
+        
+//        NSLog(@"image scale: %f", image.scale);
+//
+//        CGImageRef source = image.CGImage;
+//        CGContextRef context = CGBitmapContextCreate(NULL, destSize.width, destSize.height, CGImageGetBitsPerComponent(source), 0, CGImageGetColorSpace(source), CGImageGetBitmapInfo(source));
+//        CGContextSetInterpolationQuality(context, kCGInterpolationDefault);
+//        CGContextSetFillColorWithColor(context,  [[UIColor redColor] CGColor]);
+//        CGContextFillRect(context, CGRectMake(0, 0, destSize.width, destSize.height));
+//        
+//        CGAffineTransform uiCoords = CGAffineTransformMakeScale(destSize.width / cropboxGuideSize.width, destSize.height / cropboxGuideSize.height);
+//        uiCoords = CGAffineTransformTranslate(uiCoords, cropboxGuideSize.width / 2.0, cropboxGuideSize.height / 2.0);
+//        uiCoords = CGAffineTransformScale(uiCoords, 1.0, -1.0);
+//        CGContextConcatCTM(context, uiCoords);
+//        
+//        CGContextConcatCTM(context, editorImage.transform);
+//        CGContextScaleCTM(context, 1.0, -1.0);
+//        //CGContextConcatCTM(context, orientationTransform);
+//        
+//        CGContextDrawImage(context, CGRectMake(-image.size.width / 2.0, -image.size.height/2.0, image.size.width, image.size.height), source);
+//        
+//        CGImageRef resultRef = CGBitmapContextCreateImage(context);
+//        CGContextRelease(context);
+//        
+//        completionHandler([UIImage imageWithCGImage:resultRef scale:1.0 orientation:UIImageOrientationUp]);
     }];
 }
 

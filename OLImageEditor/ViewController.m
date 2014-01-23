@@ -12,20 +12,28 @@
 
 
 @interface ViewController () <OLImageEditorViewControllerDelegate, UINavigationControllerDelegate>
-@property (nonatomic, strong) OLImageEditorImage *image;
+@property (nonatomic, strong) OLImageEditorImage *image1, *image2;
 @property (nonatomic, strong) IBOutlet UIImageView *imageView;
 @end
 
 @implementation ViewController
 
 - (void)viewDidLoad {
-    self.image = [OLImageEditorImage imageWithURL:[NSURL URLWithString:@"http://www.deargrumpycat.com/wp-content/uploads/2013/02/Grumpy-Cat1.jpg"]];
+    self.image1 = [OLImageEditorImage imageWithURL:[NSURL URLWithString:@"http://www.deargrumpycat.com/wp-content/uploads/2013/02/Grumpy-Cat1.jpg"]];
+    self.image2 = [OLImageEditorImage imageWithURL:[NSURL URLWithString:@"https://distilleryimage10.s3.amazonaws.com/8ef7854a658711e3944b126a49f9c5ea_8.jpg"]];
 }
 
 - (IBAction)onButtonLaunchEditorClicked:(id)sender {
     OLImageEditorViewController *editor = [[OLImageEditorViewController alloc] init];
     editor.delegate = self;
-    editor.image = self.image;
+    editor.image = self.image1;
+    [self presentViewController:editor animated:YES completion:NULL];
+}
+
+- (IBAction)onButtonLaunchEditorClicked2:(id)sender {
+    OLImageEditorViewController *editor = [[OLImageEditorViewController alloc] init];
+    editor.delegate = self;
+    editor.image = self.image2;
     [self presentViewController:editor animated:YES completion:NULL];
 }
 
@@ -41,7 +49,7 @@
 
 - (void)imageEditor:(OLImageEditorViewController *)editor userDidSuccessfullyCropImage:(id<OLImageEditorImage>)image {
     [self dismissViewControllerAnimated:YES completion:nil];
-    [OLImageEditorImage getCoppedImageFromEditorImage:image size:CGSizeMake(self.imageView.frame.size.width, self.imageView.frame.size.height) progress:nil completion:^(UIImage *image) {
+    [OLImageEditorImage getCoppedImageFromEditorImage:image size:CGSizeMake(self.imageView.frame.size.width * 2, self.imageView.frame.size.height * 2) progress:nil completion:^(UIImage *image) {
         self.imageView.image = image;
     }];
 }
