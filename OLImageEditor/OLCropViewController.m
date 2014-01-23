@@ -63,7 +63,9 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             self.progressView.hidden = YES;
             self.cropView.image = image;
-            self.cropView.cropTransform = self.image.transform;
+            if (self.image.transformed) {
+                self.cropView.cropTransform = self.image.transform;
+            }
 //            self.cropView.cropAspectRatio = 1;
 //            self.cropView.keepingCropAspectRatio = YES;
         });

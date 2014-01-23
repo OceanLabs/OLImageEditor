@@ -14,6 +14,7 @@
 @property (nonatomic, strong) NSURL *url;
 @property (nonatomic, strong) id<SDWebImageOperation> inProgressDownload;
 @property (nonatomic, assign) CGAffineTransform affineTransform;
+@property (nonatomic, assign) BOOL hasTransformed;
 @end
 
 @implementation OLImageEditorImage
@@ -45,6 +46,7 @@
 }
 
 + (void)getCoppedImageFromEditorImage:(id<OLImageEditorImage>)editorImage size:(CGSize)destSize progress:(OLImageEditorImageGetImageProgressHandler)progressHandler completion:(OLImageEditorImageGetImageCompletionHandler)completionHandler {
+    NSLog(@"size: %f %f", destSize.width, destSize.height);
     [editorImage getImageWithProgress:progressHandler completion:^(UIImage *image) {
         // Create a graphics context the size of the bounding rectangle
         UIImage *cropboxGuideImage = [UIImage imageNamed:@"cropbox_guide"];
@@ -68,16 +70,27 @@
         CGFloat destScale = destSize.width / cropboxGuideSize.width;
         CGFloat scale = cropboxScale * destScale;
         
+        NSLog(@"Scale: %f cropboxScale: %f destScale: %f", scale, cropboxScale, destScale);
+        
         // do the transforms and draw the image
-        UIGraphicsBeginImageContextWithOptions(destSize, /*opaque: */ YES, /*scale: */ 1);
+        UIGraphicsBeginImageContextWithOptions(destSize, YES, 2.0);
         CGContextRef context = UIGraphicsGetCurrentContext();
         CGContextConcatCTM(context, CGAffineTransformMakeTranslation(destSize.width / 2, destSize.height / 2));
-        CGContextConcatCTM(context, CGAffineTransformMakeScale(scale, scale));
+        CGContextConcatCTM(context, CGAffineTransformMakeScale(destScale, destScale));
         CGContextConcatCTM(context, editorImage.transform);
         
         [image drawAtPoint:CGPointMake(-imgWidth / 2, -imgHeight / 2)];
+        
         UIImage *imageCopy = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
+
+        NSLog(@"imageCopy Size: %f %f", imageCopy.size.width, imageCopy.size.height);
+        
+        CGImageRef img = CGImageCreateWithImageInRect(imageCopy.CGImage, CGRectMake(destSize.width / 2, destSize.height / 2, destSize.width, destSize.height));
+        imageCopy = [UIImage imageWithCGImage:img];
+        
+        NSLog(@"imageCopy Size: %f %f", imageCopy.size.width, imageCopy.size.height);
+        
         completionHandler(imageCopy);
         
 //        NSLog(@"image scale: %f", image.scale);
@@ -146,10 +159,19 @@
 
 - (void)setTransform:(CGAffineTransform)transform {
     self.affineTransform = transform;
+    self.transformed = YES;
 }
 
 - (CGAffineTransform)transform {
     return self.affineTransform;
+}
+
+- (void)setTransformed:(BOOL)transformed {
+    self.hasTransformed = YES;
+}
+
+- (BOOL)transformed {
+    return self.hasTransformed;
 }
 
 - (void)getImageWithProgress:(OLImageEditorImageGetImageProgressHandler)progressHandler completion:(OLImageEditorImageGetImageCompletionHandler)completionHandler {

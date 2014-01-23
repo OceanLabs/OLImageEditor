@@ -49,8 +49,12 @@
 
 - (void)imageEditor:(OLImageEditorViewController *)editor userDidSuccessfullyCropImage:(id<OLImageEditorImage>)image {
     [self dismissViewControllerAnimated:YES completion:nil];
-    [OLImageEditorImage getCoppedImageFromEditorImage:image size:CGSizeMake(self.imageView.frame.size.width * 2, self.imageView.frame.size.height * 2) progress:nil completion:^(UIImage *image) {
+    [OLImageEditorImage getCoppedImageFromEditorImage:image size:CGSizeMake(656, 656/*self.imageView.frame.size.width * 2, self.imageView.frame.size.height * 2*/) progress:nil completion:^(UIImage *image) {
         self.imageView.image = image;
+        
+        NSString  *jpgPath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/Test.jpg"];
+        [UIImageJPEGRepresentation(image, 1.0) writeToFile:jpgPath atomically:YES];
+        
     }];
 }
 

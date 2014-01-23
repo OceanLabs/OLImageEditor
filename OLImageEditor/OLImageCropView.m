@@ -103,7 +103,20 @@ static const CGFloat kCropboxGuideBorder = 5;
     
     CGFloat xoff = kCropboxGuideBorder + self.cropboxGuideImageView.frame.origin.x;
     CGFloat yoff = kCropboxGuideBorder + self.cropboxGuideImageView.frame.origin.y;
+    self.userImageView.contentMode = UIViewContentModeCenter;
     self.userImageView.frame = CGRectMake(xoff - (isize.width - cbsize) / 2, yoff - (isize.height - cbsize) / 2, isize.width, isize.height);
+    CGPoint center = self.userImageView.center;
+    CGRect frame = self.userImageView.frame;
+    frame.size = self.image.size;
+    self.userImageView.frame = frame;
+    self.userImageView.center = center;
+    
+    CGFloat xScale = isize.width / self.image.size.width;
+    CGFloat yScale = isize.height / self.image.size.height;
+    NSLog(@"scaling: %f %f", xScale, yScale);
+    
+    self.cropTransform = CGAffineTransformConcat(self.cropTransform, CGAffineTransformMakeScale(xScale, yScale));
+    
     self.userImageView.transform = self.cropTransform;
 }
 
