@@ -28,6 +28,7 @@ typedef void (^OLImageEditorImageGetImageProgressHandler)(float progress);
 + (OLImageEditorImage *)imageWithImage:(UIImage *)image;
 + (OLImageEditorImage *)imageWithURL:(NSURL *)url;
 
-+ (void)getCoppedImageFromEditorImage:(id<OLImageEditorImage>)image size:(CGSize)size progress:(OLImageEditorImageGetImageProgressHandler)progressHandler completion:(OLImageEditorImageGetImageCompletionHandler)completionHandler;
++ (void)getCroppedImageFromEditorImage:(id<OLImageEditorImage>)image size:(CGSize)size progress:(OLImageEditorImageGetImageProgressHandler)progressHandler completion:(OLImageEditorImageGetImageCompletionHandler)completionHandler;
++ (UIImage *)getCroppedImageFromImage:(UIImage *)image transform:(CGAffineTransform)transform size:(CGSize)size;
 
 @end
