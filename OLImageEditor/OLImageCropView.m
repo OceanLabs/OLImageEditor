@@ -48,6 +48,8 @@ static const CGFloat kCropboxGuideBorder = 5;
 
         self.cropTransform = CGAffineTransformIdentity;
         self.userImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
+        self.userImageView.contentMode = UIViewContentModeScaleAspectFill;
+        //self.userImageView.clipsToBounds = YES;
      
         self.cropboxGuideImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"cropbox_guide"]];
         self.cropboxGuideImageView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
@@ -92,31 +94,10 @@ static const CGFloat kCropboxGuideBorder = 5;
     
     // aspect fill image within cropbox frame
     CGFloat cbsize = self.cropboxGuideImageView.frame.size.width - 2 * kCropboxGuideBorder;
-    CGSize isize = self.image.size;
-    if (isize.width > isize.height) {
-        isize.width = (isize.width / isize.height) * cbsize;
-        isize.height = cbsize;
-    } else {
-        isize.height = (isize.height / isize.width) * cbsize;
-        isize.width = cbsize;
-    }
-    
     CGFloat xoff = kCropboxGuideBorder + self.cropboxGuideImageView.frame.origin.x;
     CGFloat yoff = kCropboxGuideBorder + self.cropboxGuideImageView.frame.origin.y;
-    self.userImageView.contentMode = UIViewContentModeCenter;
-    self.userImageView.frame = CGRectMake(xoff - (isize.width - cbsize) / 2, yoff - (isize.height - cbsize) / 2, isize.width, isize.height);
-    CGPoint center = self.userImageView.center;
-    CGRect frame = self.userImageView.frame;
-    frame.size = self.image.size;
-    self.userImageView.frame = frame;
-    self.userImageView.center = center;
-    
-    CGFloat xScale = isize.width / self.image.size.width;
-    CGFloat yScale = isize.height / self.image.size.height;
-    NSLog(@"scaling: %f %f", xScale, yScale);
-    
-    self.cropTransform = CGAffineTransformConcat(self.cropTransform, CGAffineTransformMakeScale(xScale, yScale));
-    
+    self.userImageView.frame = CGRectMake(xoff, yoff, cbsize, cbsize);
+    NSLog(@"ImageViewSize: %fx%f", self.userImageView.frame.size.width, self.userImageView.frame.size.height);
     self.userImageView.transform = self.cropTransform;
 }
 

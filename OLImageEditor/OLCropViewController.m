@@ -36,7 +36,7 @@
     self.applyButton = [[UIBarButtonItem alloc] initWithTitle:@"Apply" style:UIBarButtonItemStylePlain target:self action:@selector(onButtonApplyClicked)];
     self.navigationItem.rightBarButtonItem = self.applyButton;
     self.applyButton.tintColor = [UIColor colorWithRed:255 / 255.0f green:204 / 255.0f blue:0 alpha:1];
-    self.applyButton.enabled = NO;
+    //self.applyButton.enabled = NO;
     
     UIBarButtonItem *flexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     UIBarButtonItem *deleteButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"trashcan"] style:UIBarButtonItemStylePlain target:self action:@selector(onButtonDeleteClicked)];
@@ -63,9 +63,7 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             self.progressView.hidden = YES;
             self.cropView.image = image;
-            if (self.image.transformed) {
-                self.cropView.cropTransform = self.image.transform;
-            }
+            self.cropView.cropTransform = self.image.transform;
 //            self.cropView.cropAspectRatio = 1;
 //            self.cropView.keepingCropAspectRatio = YES;
         });

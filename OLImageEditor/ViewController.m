@@ -20,7 +20,7 @@
 
 - (void)viewDidLoad {
     self.image1 = [OLImageEditorImage imageWithURL:[NSURL URLWithString:@"http://www.deargrumpycat.com/wp-content/uploads/2013/02/Grumpy-Cat1.jpg"]];
-    self.image2 = [OLImageEditorImage imageWithURL:[NSURL URLWithString:@"https://distilleryimage10.s3.amazonaws.com/8ef7854a658711e3944b126a49f9c5ea_8.jpg"]];
+    self.image2 = [OLImageEditorImage imageWithURL:[NSURL URLWithString:@"http://co.oceanlabs.psprintstudio.s3.amazonaws.com/border.png"]];
 }
 
 - (IBAction)onButtonLaunchEditorClicked:(id)sender {
@@ -49,12 +49,29 @@
 
 - (void)imageEditor:(OLImageEditorViewController *)editor userDidSuccessfullyCropImage:(id<OLImageEditorImage>)image {
     [self dismissViewControllerAnimated:YES completion:nil];
-    [OLImageEditorImage getCoppedImageFromEditorImage:image size:CGSizeMake(656, 656/*self.imageView.frame.size.width * 2, self.imageView.frame.size.height * 2*/) progress:nil completion:^(UIImage *image) {
+    
+    [OLImageEditorImage croppedImageWithEditorImage:image size:CGSizeMake(1111, 1111) progress:nil completion:^(UIImage *image) {
+        NSData *data = UIImageJPEGRepresentation(image, 0.7);
+        NSArray *dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *docsDir = [dirPaths objectAtIndex:0];
+        NSString *filePath = [[NSString alloc] initWithString: [docsDir stringByAppendingPathComponent:@"squares.jpeg"]];
+        [data writeToFile:filePath atomically:YES];
+        NSLog(@"Wrote squares to: %@", filePath);
+    }];
+
+    [OLImageEditorImage croppedImageWithEditorImage:image size:CGSizeMake(1111, 1111) progress:nil completion:^(UIImage *image) {
+        NSLog(@"got image with size: %fx%f scale:%f", image.size.width, image.size.height, image.scale);
         self.imageView.image = image;
-        
-        NSString  *jpgPath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/Test.jpg"];
-        [UIImageJPEGRepresentation(image, 1.0) writeToFile:jpgPath atomically:YES];
-        
+    }];
+    
+    
+    [OLImageEditorImage croppedImageWithEditorImage:image size:CGSizeMake(656, 656) progress:nil completion:^(UIImage *image) {
+        NSData *data = UIImageJPEGRepresentation(image, 0.7);
+        NSArray *dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *docsDir = [dirPaths objectAtIndex:0];
+        NSString *filePath = [[NSString alloc] initWithString: [docsDir stringByAppendingPathComponent:@"polaroids_mini.jpeg"]];
+        [data writeToFile:filePath atomically:YES];
+        NSLog(@"Wrote polaroids mini to: %@", filePath);
     }];
 }
 

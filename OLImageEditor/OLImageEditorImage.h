@@ -15,8 +15,6 @@ typedef void (^OLImageEditorImageGetImageProgressHandler)(float progress);
 @protocol OLImageEditorImage <NSObject>
 @required
 @property (nonatomic, assign) CGAffineTransform transform;
-@property (nonatomic, assign) BOOL transformed;
-@property (nonatomic, assign) CGRect cropRect;
 - (void)getImageWithProgress:(OLImageEditorImageGetImageProgressHandler)progressHandler completion:(OLImageEditorImageGetImageCompletionHandler)completionHandler;
 @optional
 - (void)unloadImage;
@@ -28,7 +26,7 @@ typedef void (^OLImageEditorImageGetImageProgressHandler)(float progress);
 + (OLImageEditorImage *)imageWithImage:(UIImage *)image;
 + (OLImageEditorImage *)imageWithURL:(NSURL *)url;
 
-+ (void)getCroppedImageFromEditorImage:(id<OLImageEditorImage>)image size:(CGSize)size progress:(OLImageEditorImageGetImageProgressHandler)progressHandler completion:(OLImageEditorImageGetImageCompletionHandler)completionHandler;
-+ (UIImage *)getCroppedImageFromImage:(UIImage *)image transform:(CGAffineTransform)transform size:(CGSize)size;
++ (void)croppedImageWithEditorImage:(id<OLImageEditorImage>)image size:(CGSize)size progress:(OLImageEditorImageGetImageProgressHandler)progressHandler completion:(OLImageEditorImageGetImageCompletionHandler)completionHandler;
++ (UIImage *)croppedImageWithImage:(UIImage *)image transform:(CGAffineTransform)transform size:(CGSize)size;
 
 @end
