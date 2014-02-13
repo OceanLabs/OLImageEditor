@@ -9,11 +9,12 @@
 #import "ViewController.h"
 #import "OLImageEditorViewController.h"
 #import "OLImageEditorImage.h"
+#import <CTAssetsPickerController.h>
 
-
-@interface ViewController () <OLImageEditorViewControllerDelegate, UINavigationControllerDelegate>
+@interface ViewController () <OLImageEditorViewControllerDelegate, UINavigationControllerDelegate, CTAssetsPickerControllerDelegate>
 @property (nonatomic, strong) OLImageEditorImage *image1, *image2;
 @property (nonatomic, strong) IBOutlet UIImageView *imageView;
+@property (nonatomic, strong) ALAsset *asset;
 @end
 
 @implementation ViewController
@@ -50,29 +51,64 @@
 - (void)imageEditor:(OLImageEditorViewController *)editor userDidSuccessfullyCropImage:(id<OLImageEditorImage>)image {
     [self dismissViewControllerAnimated:YES completion:nil];
     
-    [OLImageEditorImage croppedImageWithEditorImage:image size:CGSizeMake(1111, 1111) progress:nil completion:^(UIImage *image) {
+    UIImageOrientation orientation = UIImageOrientationUp;
+    NSNumber* orientationValue = [self.asset valueForProperty:@"ALAssetPropertyOrientation"];
+    if (orientationValue != nil) {
+        orientation = [orientationValue intValue];
+    }
+
+    UIImage *i = [UIImage imageWithCGImage:[self.asset.defaultRepresentation fullResolutionImage] scale:self.asset.defaultRepresentation.scale orientation:orientation];
+
+    OLImageEditorImage *ei = [OLImageEditorImage imageWithImage:i];
+    ei.transform = image.transform;
+    
+    [OLImageEditorImage croppedImageWithEditorImage:ei size:CGSizeMake(1111, 1111) progress:nil completion:^(UIImage *image) {
         NSData *data = UIImageJPEGRepresentation(image, 0.7);
         NSArray *dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *docsDir = [dirPaths objectAtIndex:0];
         NSString *filePath = [[NSString alloc] initWithString: [docsDir stringByAppendingPathComponent:@"squares.jpeg"]];
         [data writeToFile:filePath atomically:YES];
         NSLog(@"Wrote squares to: %@", filePath);
-    }];
-
-    [OLImageEditorImage croppedImageWithEditorImage:image size:CGSizeMake(1111, 1111) progress:nil completion:^(UIImage *image) {
-        NSLog(@"got image with size: %fx%f scale:%f", image.size.width, image.size.height, image.scale);
+        
         self.imageView.image = image;
     }];
-    
-    
-    [OLImageEditorImage croppedImageWithEditorImage:image size:CGSizeMake(656, 656) progress:nil completion:^(UIImage *image) {
-        NSData *data = UIImageJPEGRepresentation(image, 0.7);
-        NSArray *dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *docsDir = [dirPaths objectAtIndex:0];
-        NSString *filePath = [[NSString alloc] initWithString: [docsDir stringByAppendingPathComponent:@"polaroids_mini.jpeg"]];
-        [data writeToFile:filePath atomically:YES];
-        NSLog(@"Wrote polaroids mini to: %@", filePath);
+}
+
+- (IBAction)onButtonPickerClicked:(id)sender {
+    CTAssetsPickerController *vc = [[CTAssetsPickerController alloc] init];
+    vc.delegate = self;
+    [self presentViewController:vc animated:YES completion:nil];
+}
+
+#pragma mark - CTAssetsPickerControllerDelegate methods
+
+- (void)assetsPickerController:(CTAssetsPickerController *)picker didFinishPickingAssets:(NSArray *)assets {
+    [self dismissViewControllerAnimated:YES completion:^(void) {
+        self.asset = assets[0];
+        // Retrieve the image orientation from the ALAsset
+//        UIImageOrientation orientation = UIImageOrientationUp;
+//        NSNumber* orientationValue = [self.asset valueForProperty:@"ALAssetPropertyOrientation"];
+//        if (orientationValue != nil) {
+//            orientation = [orientationValue intValue];
+//        }
+        
+        UIImageOrientation orientation = UIImageOrientationUp;
+        NSNumber* orientationValue = [self.asset valueForProperty:@"ALAssetPropertyOrientation"];
+        if (orientationValue != nil) {
+            orientation = [orientationValue intValue];
+        }
+        
+        UIImage* image = [UIImage imageWithCGImage:[self.asset.defaultRepresentation fullScreenImage]];
+        
+        OLImageEditorViewController *editor = [[OLImageEditorViewController alloc] init];
+        editor.delegate = self;
+        editor.image = [OLImageEditorImage imageWithImage:image];
+        [self presentViewController:editor animated:YES completion:NULL];
+        
+        
+
     }];
 }
+
 
 @end

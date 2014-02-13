@@ -44,6 +44,43 @@
     return [[OLImageEditorImage alloc] initWithURL:url];
 }
 
++ (void)transform:(CGAffineTransform *)transform andSize:(CGSize *)size forOrientation:(UIImageOrientation)orientation {
+    *transform = CGAffineTransformIdentity;
+    BOOL transpose = NO;
+    
+    switch(orientation)
+    {
+        case UIImageOrientationUp:// EXIF 1
+        case UIImageOrientationUpMirrored:{ // EXIF 2
+        } break;
+        case UIImageOrientationDown: // EXIF 3
+        case UIImageOrientationDownMirrored: { // EXIF 4
+            *transform = CGAffineTransformMakeRotation(M_PI);
+        } break;
+        case UIImageOrientationLeftMirrored: // EXIF 5
+        case UIImageOrientationLeft: {// EXIF 6
+            *transform = CGAffineTransformMakeRotation(M_PI_2);
+            transpose = YES;
+        } break;
+        case UIImageOrientationRightMirrored: // EXIF 7
+        case UIImageOrientationRight: { // EXIF 8
+            *transform = CGAffineTransformMakeRotation(-M_PI_2);
+            transpose = YES;
+        } break;
+        default:
+            break;
+    }
+    
+    if(orientation == UIImageOrientationUpMirrored || orientation == UIImageOrientationDownMirrored ||
+       orientation == UIImageOrientationLeftMirrored || orientation == UIImageOrientationRightMirrored) {
+        *transform = CGAffineTransformScale(*transform, -1, 1);
+    }
+    
+    if(transpose) {
+        *size = CGSizeMake(size->height, size->width);
+    }
+}
+
 + (void)croppedImageWithEditorImage:(id<OLImageEditorImage>)editorImage size:(CGSize)destSize progress:(OLImageEditorImageGetImageProgressHandler)progressHandler completion:(OLImageEditorImageGetImageCompletionHandler)completionHandler {
     [editorImage getImageWithProgress:progressHandler completion:^(UIImage *image) {
         completionHandler([self croppedImageWithImage:image transform:editorImage.transform size:destSize]);
@@ -51,6 +88,10 @@
 }
 
 + (UIImage *)croppedImageWithImage:(UIImage *)image transform:(CGAffineTransform)transform size:(CGSize)destSize {
+    CGSize sourceImageSize = CGSizeMake(image.size.width * image.scale, image.size.height * image.scale);
+    CGAffineTransform orientationTransform = CGAffineTransformIdentity;
+    [self transform:&orientationTransform andSize:&sourceImageSize forOrientation:image.imageOrientation];
+    
     // Create a graphics context the size of the bounding rectangle
     UIImage *cropboxGuideImage = [UIImage imageNamed:@"cropbox_guide"];
     CGSize cropboxGuideSize = CGSizeMake(cropboxGuideImage.scale * (cropboxGuideImage.size.width - 10), cropboxGuideImage.scale * (cropboxGuideImage.size.height - 10));
@@ -72,9 +113,11 @@
     CGContextConcatCTM(context, transform);
     CGContextConcatCTM(context, CGAffineTransformMakeScale(1 / screenScale, - 1 / screenScale));
     
+    CGContextConcatCTM(context, orientationTransform);
+    
     // scale image to aspect fill initial crop box
-    CGFloat imgWidth = image.size.width * image.scale;
-    CGFloat imgHeight = image.size.height * image.scale;
+    CGFloat imgWidth = sourceImageSize.width;
+    CGFloat imgHeight = sourceImageSize.height;
     CGFloat imageToCropboxScale = 1;
     if (imgWidth < imgHeight) {
         imageToCropboxScale = cropboxGuideSize.width / imgWidth;
@@ -101,22 +144,28 @@
 }
 
 - (void)getImageWithProgress:(OLImageEditorImageGetImageProgressHandler)progressHandler completion:(OLImageEditorImageGetImageCompletionHandler)completionHandler {
-    self.inProgressDownload = [[SDWebImageManager sharedManager] downloadWithURL:self.url
-                                                                         options:0
-                                                                        progress:^(NSUInteger receivedSize, long long expectedSize) {
-                                                                            dispatch_async(dispatch_get_main_queue(), ^{
-                                                                                if (progressHandler) progressHandler(receivedSize / (float) expectedSize);
-                                                                            });
-                                                                        }
-                                                                       completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished) {
-                                                                           dispatch_async(dispatch_get_main_queue(), ^{
-                                                                               if (finished) {
-                                                                                   self.inProgressDownload = nil;
-                                                                                   self.image = image;
-                                                                                   completionHandler(image);
-                                                                               }
-                                                                           });
-                                                                       }];
+    if (self.image) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            completionHandler(self.image);
+        });
+    } else {
+        self.inProgressDownload = [[SDWebImageManager sharedManager] downloadWithURL:self.url
+                                                                             options:0
+                                                                            progress:^(NSUInteger receivedSize, long long expectedSize) {
+                                                                                dispatch_async(dispatch_get_main_queue(), ^{
+                                                                                    if (progressHandler) progressHandler(receivedSize / (float) expectedSize);
+                                                                                });
+                                                                            }
+                                                                           completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished) {
+                                                                               dispatch_async(dispatch_get_main_queue(), ^{
+                                                                                   if (finished) {
+                                                                                       self.inProgressDownload = nil;
+                                                                                       self.image = image;
+                                                                                       completionHandler(image);
+                                                                                   }
+                                                                               });
+                                                                           }];
+    }
 }
 
 - (void)unloadImage {
