@@ -151,7 +151,7 @@
     } else {
         self.inProgressDownload = [[SDWebImageManager sharedManager] downloadWithURL:self.url
                                                                              options:0
-                                                                            progress:^(NSUInteger receivedSize, long long expectedSize) {
+                                                                            progress:^(NSInteger receivedSize, NSInteger expectedSize) {
                                                                                 dispatch_async(dispatch_get_main_queue(), ^{
                                                                                     if (progressHandler) progressHandler(receivedSize / (float) expectedSize);
                                                                                 });
