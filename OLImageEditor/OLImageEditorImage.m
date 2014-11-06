@@ -83,20 +83,37 @@
 
 + (void)croppedImageWithEditorImage:(id<OLImageEditorImage>)editorImage size:(CGSize)destSize progress:(OLImageEditorImageGetImageProgressHandler)progressHandler completion:(OLImageEditorImageGetImageCompletionHandler)completionHandler {
     [editorImage getImageWithProgress:progressHandler completion:^(UIImage *image) {
-        completionHandler([self croppedImageWithImage:image transform:editorImage.transform size:destSize]);
+        CGAffineTransform tr = editorImage.transform;
+        completionHandler([self croppedImageWithImage:image transform:tr size:destSize initialCropboxSize:editorImage.transformFactor]);
     }];
 }
 
-+ (UIImage *)croppedImageWithImage:(UIImage *)image transform:(CGAffineTransform)transform size:(CGSize)destSize {
++ (UIImage *)croppedImageWithImage:(UIImage *)image transform:(CGAffineTransform)transform size:(CGSize)destSize{
+    return [self croppedImageWithImage:image transform:transform size:destSize initialCropboxSize:CGSizeMake(0, 0)];
+}
+
++ (UIImage *)croppedImageWithImage:(UIImage *)image transform:(CGAffineTransform)transform size:(CGSize)destSize initialCropboxSize:(CGSize)initialCropboxSize{
     CGSize sourceImageSize = CGSizeMake(image.size.width * image.scale, image.size.height * image.scale);
     CGAffineTransform orientationTransform = CGAffineTransformIdentity;
     [self transform:&orientationTransform andSize:&sourceImageSize forOrientation:image.imageOrientation];
     
     // Create a graphics context the size of the bounding rectangle
     UIImage *cropboxGuideImage = [UIImage imageNamed:@"cropbox_guide"];
+    if (initialCropboxSize.width != 0 && initialCropboxSize.height != 0){
+        UIGraphicsBeginImageContext(initialCropboxSize);
+        [cropboxGuideImage drawInRect:CGRectMake(0, 0, initialCropboxSize.width, initialCropboxSize.height)];
+        cropboxGuideImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+    }
+    UIGraphicsBeginImageContext(destSize);
+    [cropboxGuideImage drawInRect:CGRectMake(-destSize.width / 2, -destSize.height / 2, destSize.width, destSize.height)];
+    cropboxGuideImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    
     CGSize cropboxGuideSize = CGSizeMake(cropboxGuideImage.scale * (cropboxGuideImage.size.width - 10), cropboxGuideImage.scale * (cropboxGuideImage.size.height - 10));
-    NSAssert(cropboxGuideSize.width == cropboxGuideSize.height, @"oops only support 1:1 aspect ratio at the moment given we show be showing a square crop box");
-    NSAssert(destSize.width == destSize.height, @"oops only support 1:1 aspect ratio at the moment given we show be showing a square crop box");
+//    NSAssert(cropboxGuideSize.width == cropboxGuideSize.height, @"oops only support 1:1 aspect ratio at the moment given we show be showing a square crop box");
+//    NSAssert(destSize.width == destSize.height, @"oops only support 1:1 aspect ratio at the moment given we show be showing a square crop box");
     
     // do the transforms and draw the image
     UIGraphicsBeginImageContextWithOptions(destSize, /*opaque: */ YES, /*scale: */ 1);

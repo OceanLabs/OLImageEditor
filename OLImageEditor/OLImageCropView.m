@@ -24,12 +24,15 @@ static const CGFloat kCropboxGuideBorder = 5;
 @property (nonatomic, strong) UIImageView *userImageView;
 @property (nonatomic, strong) UIImageView *cropboxGuideImageView;
 @property (nonatomic, strong) DarkOverlayView *overlayView;
-
 @end
 
 @implementation OLImageCropView
 
-- (id)initWithFrame:(CGRect)frame
+- (id)initWithFrame:(CGRect)frame{
+    return [self initWithFrame:frame cropBoxSize:CGSizeMake(0, 0)];
+}
+
+- (id)initWithFrame:(CGRect)frame cropBoxSize:(CGSize)size
 {
     self = [super initWithFrame:frame];
     if (self) {
@@ -51,7 +54,16 @@ static const CGFloat kCropboxGuideBorder = 5;
         self.userImageView.contentMode = UIViewContentModeScaleAspectFill;
         //self.userImageView.clipsToBounds = YES;
      
-        self.cropboxGuideImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"cropbox_guide"]];
+        UIImage *cropboxImage = [UIImage imageNamed:@"cropbox_guide"];
+        if (size.width != 0 && size.height != 0){
+                UIGraphicsBeginImageContext(size);
+                [cropboxImage drawInRect:CGRectMake(0, 0, size.width, size.height)];
+                cropboxImage = UIGraphicsGetImageFromCurrentImageContext();
+                UIGraphicsEndImageContext();
+        }
+        self.cropboxGuideImageView = [[UIImageView alloc] initWithImage:cropboxImage];
+        
+        
         self.cropboxGuideImageView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
         
         self.overlayView = [[DarkOverlayView alloc] initWithCropboxGuideImageView:self.cropboxGuideImageView];
@@ -93,10 +105,11 @@ static const CGFloat kCropboxGuideBorder = 5;
     }
     
     // aspect fill image within cropbox frame
-    CGFloat cbsize = self.cropboxGuideImageView.frame.size.width - 2 * kCropboxGuideBorder;
+    CGFloat cbwidth= self.cropboxGuideImageView.frame.size.width - 2 * kCropboxGuideBorder;
+    CGFloat cbheight= self.cropboxGuideImageView.frame.size.height - 2 * kCropboxGuideBorder;
     CGFloat xoff = kCropboxGuideBorder + self.cropboxGuideImageView.frame.origin.x;
     CGFloat yoff = kCropboxGuideBorder + self.cropboxGuideImageView.frame.origin.y;
-    self.userImageView.frame = CGRectMake(xoff, yoff, cbsize, cbsize);
+    self.userImageView.frame = CGRectMake(xoff, yoff, cbwidth, cbheight);
     NSLog(@"ImageViewSize: %fx%f", self.userImageView.frame.size.width, self.userImageView.frame.size.height);
     self.userImageView.transform = self.cropTransform;
 }

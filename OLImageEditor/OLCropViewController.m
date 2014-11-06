@@ -16,6 +16,7 @@
 @property (nonatomic, strong) OLImageCropView *cropView;
 @property (nonatomic, strong) DACircularProgressView *progressView;
 @property (nonatomic, strong) UIBarButtonItem *applyButton;
+@property (assign, nonatomic) CGSize cropboxGuideSize;
 @end
 
 @implementation OLCropViewController
@@ -26,10 +27,11 @@
     contentView.backgroundColor = [UIColor blackColor];
     self.view = contentView;
     
-    self.cropView = [[OLImageCropView alloc] initWithFrame:self.view.bounds];
+    self.cropView = [[OLImageCropView alloc] initWithFrame:self.view.bounds cropBoxSize:self.cropboxGuideSize];
     self.cropView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [contentView addSubview:self.cropView];
     self.cropView.delegate = self;
+    
 
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(onButtonCancelClicked)];
 
@@ -60,6 +62,7 @@
             self.progressView.progress = progress;
         });
     } completion:^(UIImage *image) {
+        self.image.transformFactor = self.cropboxGuideSize;
         dispatch_async(dispatch_get_main_queue(), ^{
             self.progressView.hidden = YES;
             self.cropView.image = image;
@@ -68,6 +71,10 @@
 //            self.cropView.keepingCropAspectRatio = YES;
         });
     }];
+}
+
+-(void)setCropboxGuideImageToSize:(CGSize)size{
+    self.cropboxGuideSize = size;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
