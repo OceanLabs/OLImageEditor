@@ -31,6 +31,10 @@
     return self.cropVC.image;
 }
 
+-(void)setCropboxGuideImageToSize:(CGSize)size{
+    [self.cropVC setCropboxGuideImageToSize:size];
+}
+
 - (void)viewDidLoad {
     self.navigationBarHidden = NO;
     self.toolbarHidden = NO;

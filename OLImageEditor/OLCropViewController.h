@@ -12,4 +12,5 @@
 
 @interface OLCropViewController : UIViewController
 @property (nonatomic, strong) id<OLImageEditorImage> image;
+-(void)setCropboxGuideImageToSize:(CGSize)size;
 @end

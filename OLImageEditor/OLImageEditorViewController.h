@@ -22,4 +22,5 @@
 @interface OLImageEditorViewController : UINavigationController
 @property (nonatomic, strong) id<OLImageEditorImage> image;
 @property (nonatomic, weak) id<OLImageEditorViewControllerDelegate, UINavigationControllerDelegate> delegate;
+-(void)setCropboxGuideImageToSize:(CGSize)size;
 @end

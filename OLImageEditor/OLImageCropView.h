@@ -19,4 +19,5 @@
 @property (nonatomic, assign, getter = hasUserCroppedImage) BOOL userCroppedImage;
 @property (nonatomic, weak) id<OLImageCropViewDelegate> delegate;
 @property (nonatomic, assign) CGAffineTransform cropTransform;
+- (id)initWithFrame:(CGRect)frame cropBoxSize:(CGSize)size;
 @end
