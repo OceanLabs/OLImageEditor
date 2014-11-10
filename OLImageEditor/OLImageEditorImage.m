@@ -8,6 +8,7 @@
 
 #import "OLImageEditorImage.h"
 #import <SDWebImageManager.h>
+#import <tgmath.h>
 
 @interface OLImageEditorImage ()
 @property (nonatomic, strong) UIImage *image;
@@ -111,9 +112,9 @@
     UIGraphicsEndImageContext();
     
     
-    CGSize cropboxGuideSize = CGSizeMake(cropboxGuideImage.scale * (cropboxGuideImage.size.width - 10), cropboxGuideImage.scale * (cropboxGuideImage.size.height - 10));
-//    NSAssert(cropboxGuideSize.width == cropboxGuideSize.height, @"oops only support 1:1 aspect ratio at the moment given we show be showing a square crop box");
-//    NSAssert(destSize.width == destSize.height, @"oops only support 1:1 aspect ratio at the moment given we show be showing a square crop box");
+    CGSize cropboxGuideSize = CGSizeMake(cropboxGuideImage.scale * (cropboxGuideImage.size.width), cropboxGuideImage.scale * (cropboxGuideImage.size.height));
+    //    NSAssert(cropboxGuideSize.width == cropboxGuideSize.height, @"oops only support 1:1 aspect ratio at the moment given we show be showing a square crop box");
+    //    NSAssert(destSize.width == destSize.height, @"oops only support 1:1 aspect ratio at the moment given we show be showing a square crop box");
     
     // do the transforms and draw the image
     UIGraphicsBeginImageContextWithOptions(destSize, /*opaque: */ YES, /*scale: */ 1);
@@ -136,11 +137,12 @@
     CGFloat imgWidth = sourceImageSize.width;
     CGFloat imgHeight = sourceImageSize.height;
     CGFloat imageToCropboxScale = 1;
-    if (imgWidth < imgHeight) {
-        imageToCropboxScale = cropboxGuideSize.width / imgWidth;
-    } else {
-        imageToCropboxScale = cropboxGuideSize.height / imgHeight;
-    }
+    CGFloat xScale = 1;
+    CGFloat yScale = 1;
+    
+    xScale = cropboxGuideSize.width / imgWidth;
+    yScale = cropboxGuideSize.height / imgHeight;
+    imageToCropboxScale = fmax(xScale, yScale);
     
     imgWidth *= imageToCropboxScale;
     imgHeight *= imageToCropboxScale;

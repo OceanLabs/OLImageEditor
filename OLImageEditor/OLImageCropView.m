@@ -48,18 +48,18 @@ static const CGFloat kCropboxGuideBorder = 5;
         [self addGestureRecognizer:pinchGR];
         [self addGestureRecognizer:panGR];
         [self addGestureRecognizer:rotateGR];
-
+        
         self.cropTransform = CGAffineTransformIdentity;
         self.userImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
         self.userImageView.contentMode = UIViewContentModeScaleAspectFill;
         //self.userImageView.clipsToBounds = YES;
-     
+        
         UIImage *cropboxImage = [UIImage imageNamed:@"cropbox_guide"];
         if (size.width != 0 && size.height != 0){
-                UIGraphicsBeginImageContext(size);
-                [cropboxImage drawInRect:CGRectMake(0, 0, size.width, size.height)];
-                cropboxImage = UIGraphicsGetImageFromCurrentImageContext();
-                UIGraphicsEndImageContext();
+            UIGraphicsBeginImageContext(size);
+            [cropboxImage drawInRect:CGRectMake(0, 0, size.width, size.height)];
+            cropboxImage = UIGraphicsGetImageFromCurrentImageContext();
+            UIGraphicsEndImageContext();
         }
         self.cropboxGuideImageView = [[UIImageView alloc] initWithImage:cropboxImage];
         
@@ -72,6 +72,9 @@ static const CGFloat kCropboxGuideBorder = 5;
         [self addSubview:self.userImageView];
         [self addSubview:self.overlayView];
         [self addSubview:self.cropboxGuideImageView];
+        
+        CGFloat scale = 0.8 * ([UIScreen mainScreen].bounds.size.width / cropboxImage.size.width);
+        self.transform = CGAffineTransformMakeScale(scale, scale);
     }
     return self;
 }
@@ -149,7 +152,7 @@ static const CGFloat kCropboxGuideBorder = 5;
     self.lastRotation = recognizer.rotation;
     self.cropTransform = CGAffineTransformConcat(CGAffineTransformMakeRotation(deltaRotation), self.cropTransform);
     [self notifyOfCropStartingIfNecessary];
-
+    
 }
 
 #pragma mark - UIGestureRecognizerDelegate methods
