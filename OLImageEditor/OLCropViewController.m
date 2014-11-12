@@ -34,21 +34,23 @@
     [contentView addSubview:self.cropView];
     self.cropView.delegate = self;
     
-    UIImage *cropboxImageToBeShown = [UIImage imageNamed:@"cropbox_guide"];
-    CGFloat cropboxScale = self.cropboxGuideSize.width / cropboxImageToBeShown.size.width;
-    cropboxScale = 1 - cropboxScale;
-    CGFloat borderRatio = 10.0 / cropboxImageToBeShown.size.width;
-    CGFloat scale = 0.8 * ([UIScreen mainScreen].bounds.size.width / self.cropboxGuideSize.width);
-    if (self.cropboxGuideSize.width != 0 && self.cropboxGuideSize.height != 0){
-        UIGraphicsBeginImageContext(CGSizeMake((self.cropboxGuideSize.width - 10 *cropboxScale) * scale, (self.cropboxGuideSize.height - 10 *cropboxScale) * scale));
-        [cropboxImageToBeShown drawInRect:CGRectMake(0, 0, (self.cropboxGuideSize.width - 10 *cropboxScale) * scale, (self.cropboxGuideSize.height - 10 *cropboxScale) * scale)];
-        cropboxImageToBeShown = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-    }
-    self.cropboxGuideImageViewHighQuality = [[UIImageView alloc] initWithImage:cropboxImageToBeShown];
-    [contentView addSubview:self.cropboxGuideImageViewHighQuality];
-    self.cropboxGuideImageViewHighQuality.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
     
+    if (self.cropboxGuideSize.width != 0 && self.cropboxGuideSize.height != 0){
+        UIImage *cropboxImageToBeShown = [UIImage imageNamed:@"cropbox_guide"];
+        CGFloat cropboxScale = self.cropboxGuideSize.width / cropboxImageToBeShown.size.width;
+        cropboxScale = 1 - cropboxScale;
+        CGFloat borderRatio = 10.0 / cropboxImageToBeShown.size.width;
+        CGFloat scale = 0.8 * ([UIScreen mainScreen].bounds.size.width / self.cropboxGuideSize.width);
+        if (self.cropboxGuideSize.width != 0 && self.cropboxGuideSize.height != 0){
+            UIGraphicsBeginImageContext(CGSizeMake((self.cropboxGuideSize.width - 10 *cropboxScale) * scale, (self.cropboxGuideSize.height - 10 *cropboxScale) * scale));
+            [cropboxImageToBeShown drawInRect:CGRectMake(0, 0, (self.cropboxGuideSize.width - 10 *cropboxScale) * scale, (self.cropboxGuideSize.height - 10 *cropboxScale) * scale)];
+            cropboxImageToBeShown = UIGraphicsGetImageFromCurrentImageContext();
+            UIGraphicsEndImageContext();
+        }
+        self.cropboxGuideImageViewHighQuality = [[UIImageView alloc] initWithImage:cropboxImageToBeShown];
+        [contentView addSubview:self.cropboxGuideImageViewHighQuality];
+        self.cropboxGuideImageViewHighQuality.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+    }
     
 
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(onButtonCancelClicked)];
