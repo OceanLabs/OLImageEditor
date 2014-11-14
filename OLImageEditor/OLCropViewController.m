@@ -54,6 +54,7 @@
     
 
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(onButtonCancelClicked)];
+    self.navigationItem.leftBarButtonItem.tag = 200;
 
     self.applyButton = [[UIBarButtonItem alloc] initWithTitle:@"Apply" style:UIBarButtonItemStylePlain target:self action:@selector(onButtonApplyClicked)];
     self.navigationItem.rightBarButtonItem = self.applyButton;
@@ -62,6 +63,7 @@
     
     UIBarButtonItem *flexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     UIBarButtonItem *deleteButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"trashcan"] style:UIBarButtonItemStylePlain target:self action:@selector(onButtonDeleteClicked)];
+    deleteButton.tag = 100;
     deleteButton.tintColor = [UIColor colorWithRed:203 / 255.0f green:55 / 255.0f blue:37 / 255.0f alpha:1];
     self.toolbarItems = @[flexibleSpace, deleteButton];
     
