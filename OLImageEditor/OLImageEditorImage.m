@@ -85,7 +85,12 @@
 + (void)croppedImageWithEditorImage:(id<OLImageEditorImage>)editorImage size:(CGSize)destSize progress:(OLImageEditorImageGetImageProgressHandler)progressHandler completion:(OLImageEditorImageGetImageCompletionHandler)completionHandler {
     [editorImage getImageWithProgress:progressHandler completion:^(UIImage *image) {
         CGAffineTransform tr = editorImage.transform;
-        completionHandler([self croppedImageWithImage:image transform:tr size:destSize initialCropboxSize:editorImage.transformFactor]);
+        CGSize initialCropboxSize;
+        if ([editorImage respondsToSelector:@selector(transformFactor)]){
+            initialCropboxSize = editorImage.transformFactor;
+        }
+        UIImage *croppedImage = [self croppedImageWithImage:image transform:tr size:destSize initialCropboxSize:initialCropboxSize];
+        completionHandler(croppedImage);
     }];
 }
 
