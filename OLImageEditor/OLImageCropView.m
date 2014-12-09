@@ -75,6 +75,8 @@ static const CGFloat kCropboxGuideBorder = 5;
         
         CGFloat scale = 0.8 * ([UIScreen mainScreen].bounds.size.width / cropboxImage.size.width);
         self.transform = CGAffineTransformMakeScale(scale, scale);
+        
+        self.cropboxGuideImageView.hidden = YES;
     }
     return self;
 }
