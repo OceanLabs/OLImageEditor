@@ -51,5 +51,9 @@
     return UIInterfaceOrientationPortrait;
 }
 
+- (void)setHidesDeleteIcon:(BOOL)hidesDeleteIcon {
+    _hidesDeleteIcon = hidesDeleteIcon;
+    self.cropVC.hidesDeleteButton = self.hidesDeleteIcon;
+}
 
 @end

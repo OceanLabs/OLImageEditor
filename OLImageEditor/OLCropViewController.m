@@ -17,6 +17,7 @@
 @property (nonatomic, strong) DACircularProgressView *progressView;
 @property (nonatomic, strong) UIBarButtonItem *applyButton;
 @property (assign, nonatomic) CGSize cropboxGuideSize;
+@property (nonatomic, strong) UIBarButtonItem *deleteButton;
 
 @property (strong, nonatomic) UIImageView *cropboxGuideImageViewHighQuality;
 @end
@@ -62,10 +63,13 @@
     self.applyButton.enabled = NO;
     
     UIBarButtonItem *flexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    UIBarButtonItem *deleteButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"trashcan"] style:UIBarButtonItemStylePlain target:self action:@selector(onButtonDeleteClicked)];
-    deleteButton.tag = 100;
-    deleteButton.tintColor = [UIColor colorWithRed:203 / 255.0f green:55 / 255.0f blue:37 / 255.0f alpha:1];
-    self.toolbarItems = @[flexibleSpace, deleteButton];
+    
+    if (!self.hidesDeleteButton) {
+        self.deleteButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"trashcan"] style:UIBarButtonItemStylePlain target:self action:@selector(onButtonDeleteClicked)];
+        self.deleteButton.tag = 100;
+        self.deleteButton.tintColor = [UIColor colorWithRed:203 / 255.0f green:55 / 255.0f blue:37 / 255.0f alpha:1];
+        self.toolbarItems = @[flexibleSpace, self.deleteButton];
+    }
     
     CGRect f = self.view.bounds;
     f.size.width = 40;
@@ -97,6 +101,13 @@
 
 -(void)setCropboxGuideImageToSize:(CGSize)size{
     self.cropboxGuideSize = size;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    if (self.hidesDeleteButton) {
+        self.toolbarItems = @[];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {

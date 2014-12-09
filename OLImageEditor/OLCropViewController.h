@@ -12,5 +12,6 @@
 
 @interface OLCropViewController : UIViewController
 @property (nonatomic, strong) id<OLImageEditorImage> image;
+@property (nonatomic, assign) BOOL hidesDeleteButton;
 -(void)setCropboxGuideImageToSize:(CGSize)size;
 @end
