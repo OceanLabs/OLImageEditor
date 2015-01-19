@@ -8,7 +8,6 @@
 
 #import "OLImageCropView.h"
 
-static const CGFloat snapThresholdAngleRads = 2.5 * (M_PI / 180.0f);
 static const CGFloat kCropboxGuideBorder = 5;
 
 @interface DarkOverlayView : UIView
