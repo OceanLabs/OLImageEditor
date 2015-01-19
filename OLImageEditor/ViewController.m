@@ -20,21 +20,13 @@
 @implementation ViewController
 
 - (void)viewDidLoad {
-    self.image1 = [OLImageEditorImage imageWithURL:[NSURL URLWithString:@"http://www.deargrumpycat.com/wp-content/uploads/2013/02/Grumpy-Cat1.jpg"]];
-    self.image2 = [OLImageEditorImage imageWithURL:[NSURL URLWithString:@"http://co.oceanlabs.psprintstudio.s3.amazonaws.com/border.png"]];
+    self.image1 = [OLImageEditorImage imageWithURL:[NSURL URLWithString:@"http://psps.s3.amazonaws.com/sdk_static/4.jpg"]];
 }
 
 - (IBAction)onButtonLaunchEditorClicked:(id)sender {
     OLImageEditorViewController *editor = [[OLImageEditorViewController alloc] init];
     editor.delegate = self;
     editor.image = self.image1;
-    [self presentViewController:editor animated:YES completion:NULL];
-}
-
-- (IBAction)onButtonLaunchEditorClicked2:(id)sender {
-    OLImageEditorViewController *editor = [[OLImageEditorViewController alloc] init];
-    editor.delegate = self;
-    editor.image = self.image2;
     [self presentViewController:editor animated:YES completion:NULL];
 }
 

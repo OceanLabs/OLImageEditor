@@ -41,7 +41,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		42C1905F8B664EB59B006C3B /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		03C8EEFA1B31CFE8062A9938 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		45C7FF44D6FE4E79B8C5C38F /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD550E1E188C6D2F00782D75 /* OLImageEditor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OLImageEditor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD550E21188C6D2F00782D75 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -72,6 +72,7 @@
 		CDBE6AEF188C984E009571A2 /* OLImageEditorImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OLImageEditorImage.m; sourceTree = "<group>"; };
 		CDE07454188EC513009ADFA2 /* OLImageCropView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OLImageCropView.h; sourceTree = "<group>"; };
 		CDE07455188EC513009ADFA2 /* OLImageCropView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OLImageCropView.m; sourceTree = "<group>"; };
+		E941D45696A582BDF9D8B660 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +100,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		236B0AF2F110A02ED88FA585 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				E941D45696A582BDF9D8B660 /* Pods.debug.xcconfig */,
+				03C8EEFA1B31CFE8062A9938 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		CD550E15188C6D2F00782D75 = {
 			isa = PBXGroup;
 			children = (
@@ -106,7 +116,7 @@
 				CD550E46188C6D2F00782D75 /* OLImageEditorTests */,
 				CD550E20188C6D2F00782D75 /* Frameworks */,
 				CD550E1F188C6D2F00782D75 /* Products */,
-				42C1905F8B664EB59B006C3B /* Pods.xcconfig */,
+				236B0AF2F110A02ED88FA585 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -135,7 +145,7 @@
 			isa = PBXGroup;
 			children = (
 				CD550E57188C6D3E00782D75 /* ImageEditor */,
-				CD550E56188C6D3400782D75 /* Example */,
+				CD550E56188C6D3400782D75 /* Sample App */,
 				CD550E28188C6D2F00782D75 /* Supporting Files */,
 			);
 			path = OLImageEditor;
@@ -170,7 +180,7 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		CD550E56188C6D3400782D75 /* Example */ = {
+		CD550E56188C6D3400782D75 /* Sample App */ = {
 			isa = PBXGroup;
 			children = (
 				CD550E5A188C73B400782D75 /* c1.jpg */,
@@ -181,7 +191,7 @@
 				CD550E37188C6D2F00782D75 /* ViewController.m */,
 				CD550E39188C6D2F00782D75 /* Images.xcassets */,
 			);
-			name = Example;
+			name = "Sample App";
 			sourceTree = "<group>";
 		};
 		CD550E57188C6D3E00782D75 /* ImageEditor */ = {
@@ -309,7 +319,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		B6D8E39AF30546C1803F4666 /* Check Pods Manifest.lock */ = {
@@ -464,7 +474,7 @@
 		};
 		CD550E51188C6D2F00782D75 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 42C1905F8B664EB59B006C3B /* Pods.xcconfig */;
+			baseConfigurationReference = E941D45696A582BDF9D8B660 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -478,7 +488,7 @@
 		};
 		CD550E52188C6D2F00782D75 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 42C1905F8B664EB59B006C3B /* Pods.xcconfig */;
+			baseConfigurationReference = 03C8EEFA1B31CFE8062A9938 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;

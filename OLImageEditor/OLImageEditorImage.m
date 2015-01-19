@@ -19,6 +19,8 @@
 
 @implementation OLImageEditorImage
 
+@synthesize transformFactor;
+
 - (id)initWithImage:(UIImage *)image {
     if (self = [super init]) {
         self.image = image;
@@ -173,22 +175,19 @@
             completionHandler(self.image);
         });
     } else {
-        self.inProgressDownload = [[SDWebImageManager sharedManager] downloadWithURL:self.url
-                                                                             options:0
-                                                                            progress:^(NSInteger receivedSize, NSInteger expectedSize) {
-                                                                                dispatch_async(dispatch_get_main_queue(), ^{
-                                                                                    if (progressHandler) progressHandler(receivedSize / (float) expectedSize);
-                                                                                });
-                                                                            }
-                                                                           completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished) {
-                                                                               dispatch_async(dispatch_get_main_queue(), ^{
-                                                                                   if (finished) {
-                                                                                       self.inProgressDownload = nil;
-                                                                                       self.image = image;
-                                                                                       completionHandler(image);
-                                                                                   }
-                                                                               });
-                                                                           }];
+        self.inProgressDownload = [[SDWebImageManager sharedManager] downloadImageWithURL:self.url options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (progressHandler) progressHandler(receivedSize / (float) expectedSize);
+            });
+        } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (finished) {
+                    self.inProgressDownload = nil;
+                    self.image = image;
+                    completionHandler(image);
+                }
+            });
+        }];
     }
 }
 
